@@ -1,6 +1,10 @@
 # Multi-Region Severity Assessment with Hybrid Network
 
-This repository contains the implementation of a hybrid network for multi-region severity assessment of chest X-rays. The network combines Spatial Transformer Network (STN), segmentation, and classification components for accurate severity scoring.
+This repository contains the official implementation of a hybrid network for multi-region severity assessment of chest X-rays. The network combines Spatial Transformer Network (STN), segmentation, and classification components for accurate severity scoring.
+
+official paper: [COVID19 to Pneumonia: Multi Region Lung Severity Classification using CNN Transformer Position-Aware Feature Encoding Network](https://papers.miccai.org/miccai-2024/paper/1495_paper.pdf)
+
+
 
 ![System Overview](figure/FIG1.png)
 
