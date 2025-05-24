@@ -343,6 +343,8 @@ def main(args):
         abs_list = np.abs(np.array(pred_list) - np.array(label_list))
         print(f"Consensus Test MAE : {np.mean(abs_list):.2f}")
     
+    
+    # Report 생성.
     # pandas. [filename, pred, label, abs(pred-label), position]
     report_df = pd.DataFrame()
     report_df['filename'] = file_list 

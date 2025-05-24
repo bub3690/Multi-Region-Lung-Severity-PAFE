@@ -110,7 +110,7 @@ def evaluate(model, EPOCHS, epoch ,valid_dataloader, classify_criterion, DEVICE)
             
             for i in range(6):
                 pos_probs = pred[:,i,:]
-
+                # regression은 클래스의 가중합
                 #pos_regress = pos_probs * torch.tensor([0,1,2,3],dtype=torch.float32).to(DEVICE)
                 loss_classification += classify_criterion( pos_probs, label[:,i])
                 
@@ -156,7 +156,7 @@ def main(args):
     print('Using Pytorch version : ',torch.__version__,' Device : ',DEVICE)
     
 
-    base_path = '/Multi-Region-Lung-Severity-PAFE/'
+    base_path = '/multi-region-severity-hybridNet/'
     data_path = '/data/'
     
     model_name = 'brixia_{}_{}_ep{}'.format(args.arch, args.backbone, args.epochs)
@@ -165,7 +165,7 @@ def main(args):
     wandb.login(key='') # use your key
     wandb.init(project="brixia")
     wandb.config.update(args)
-    experiment_name = model_name 
+    experiment_name = model_name # check point의 이름이 될 것.
     wandb.run.name = experiment_name
     wandb.run.save()
     
@@ -177,6 +177,7 @@ def main(args):
     
     label_data = pd.read_csv( os.path.join(data_path,'metadata_global_v2_process.csv') )
     consensus_csv = pd.read_csv( os.path.join(data_path,'metadata_consensus_v1.csv'))
+    # consensus_csv Filename과 겹치는 데이터 제거
     label_data = label_data[~label_data['Filename'].isin(consensus_csv['Filename'])]
     subject_array=label_data['Subject'].unique()
     
@@ -434,7 +435,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_class', default=4, type=int, help='num_class')
     parser.add_argument('--num_regions', default=6, type=int, help='num_class')
     parser.add_argument('--arch', default='cnn', type=str, help='[cnn, hybrid]')
-    parser.add_argument('--backbone', default='resnet18', type=str, help='[ resnet18,resnet34,resnet50]')
+    parser.add_argument('--backbone', default='resnet18', type=str, help='[ resnet18,resnet34,resnet50, mobilenet_v3_small, densenet121 ]')
 
     args = parser.parse_args()
     
